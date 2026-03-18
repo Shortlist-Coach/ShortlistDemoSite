@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ethics & AI Philosophy — Shortlist was built with your wellbeing in mind." />
+  <title>Ethics & AI Philosophy | Shortlist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0c1a;
+      --surface: #11132b;
+      --surface2: #161836;
+      --border: #1e2040;
+      --yellow: #f5e642;
+      --cyan: #00e5ff;
+      --orange: #ff6b2b;
+      --pink: #ff2d78;
+      --text: #e8eaf6;
+      --muted: #8a9099;
+      --faint: #444860;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* STREAKS */
+    .streaks {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .streak {
+      position: absolute; height: 1.5px; border-radius: 2px;
+      opacity: 0; animation: streakSlide linear infinite;
+    }
+    .streak:nth-child(1) { top: 8%;  width: 260px; background: linear-gradient(90deg,transparent,var(--cyan),transparent);   animation-duration: 9s;  animation-delay: 0s;   }
+    .streak:nth-child(2) { top: 19%; width: 180px; background: linear-gradient(90deg,transparent,var(--yellow),transparent); animation-duration: 7s;  animation-delay: 2.5s; }
+    .streak:nth-child(3) { top: 34%; width: 310px; background: linear-gradient(90deg,transparent,var(--orange),transparent); animation-duration: 11s; animation-delay: 5s;   }
+    .streak:nth-child(4) { top: 52%; width: 200px; background: linear-gradient(90deg,transparent,var(--pink),transparent);   animation-duration: 8s;  animation-delay: 1.5s; }
+    .streak:nth-child(5) { top: 67%; width: 240px; background: linear-gradient(90deg,transparent,var(--cyan),transparent);   animation-duration: 10s; animation-delay: 7s;   }
+    .streak:nth-child(6) { top: 80%; width: 170px; background: linear-gradient(90deg,transparent,var(--yellow),transparent); animation-duration: 6s;  animation-delay: 3.8s; }
+    @keyframes streakSlide {
+      0%   { left: -320px; opacity: 0; }
+      8%   { opacity: 0.7; }
+      85%  { opacity: 0.4; }
+      100% { left: 110%;  opacity: 0; }
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(11,12,26,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 20px; font-weight: 700;
+      color: var(--yellow); text-decoration: none;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 18px rgba(245,230,66,0.4);
+    }
+    .nav-links {
+      display: flex; gap: 32px; list-style: none; align-items: center;
+    }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-links a.active { color: var(--text); }
+    .nav-cta {
+      color: var(--cyan) !important;
+      border: 1.5px solid var(--cyan);
+      padding: 6px 16px; border-radius: 4px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: rgba(0,229,255,0.08) !important; }
+
+    /* PROGRESS BAR */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--yellow));
+      z-index: 200; width: 0%; transition: width 0.1s linear;
+    }
+
+    /* LAYOUT */
+    .container { max-width: 860px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+
+    /* HERO */
+    .hero {
+      padding: 80px 0 56px;
+    }
+    .hero-kicker {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; color: var(--cyan);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      display: block; margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700; line-height: 1.2;
+      color: var(--text); margin-bottom: 24px;
+    }
+    .hero h1 em {
+      color: var(--cyan); font-style: normal;
+    }
+    .hero-lede {
+      font-size: 18px; color: var(--muted);
+      max-width: 600px; line-height: 1.7;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px; background: var(--border);
+      margin: 56px 0;
+    }
+
+    /* SECTIONS */
+    .ethics-section {
+      margin-bottom: 56px;
+    }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; color: var(--cyan);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      display: block; margin-bottom: 20px;
+    }
+    .ethics-section h2 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 700; color: var(--text);
+      margin-bottom: 20px; line-height: 1.3;
+    }
+    .ethics-section p {
+      color: var(--muted); font-size: 16px;
+      line-height: 1.8; margin-bottom: 16px;
+    }
+    .ethics-section p:last-child { margin-bottom: 0; }
+    .ethics-section p strong {
+      color: var(--text); font-weight: 500;
+    }
+
+    /* CALLOUT BOX */
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--cyan);
+      border-radius: 6px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .callout p {
+      color: var(--text) !important;
+      font-size: 15px !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* CRISIS RESOURCES */
+    .crisis-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      margin: 28px 0;
+    }
+    .crisis-block p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+    .crisis-resource {
+      display: flex; flex-direction: column;
+      gap: 4px; margin-bottom: 20px;
+    }
+    .crisis-resource:last-child { margin-bottom: 0; }
+    .crisis-resource-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; font-weight: 700;
+      color: var(--text);
+    }
+    .crisis-resource-detail {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; color: var(--cyan);
+    }
+    .crisis-resource-desc {
+      font-size: 14px; color: var(--muted);
+    }
+
+    /* CLOSING */
+    .closing {
+      text-align: center;
+      padding: 56px 0 80px;
+      border-top: 1px solid var(--border);
+      margin-top: 56px;
+    }
+    .closing p {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px; color: var(--faint);
+      font-style: italic; letter-spacing: 0.02em;
+      max-width: 560px; margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    @media (max-width: 720px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 16px; }
+      .container { padding: 0 24px; }
+      .hero { padding: 48px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="streaks" aria-hidden="true">
+  <div class="streak"></div><div class="streak"></div>
+  <div class="streak"></div><div class="streak"></div>
+  <div class="streak"></div><div class="streak"></div>
+</div>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">SHORTLIST</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Build Log</a></li>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="ethics.html" class="active">Ethics</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero reveal">
+    <span class="hero-kicker">Ethics & AI Philosophy</span>
+    <h1>Built with your<br/><em>wellbeing in mind.</em></h1>
+    <p class="hero-lede">Job searching is one of the more vulnerable things a person can go through. It involves rejection, uncertainty, and a lot of time spent second-guessing yourself. Shortlist was designed with that reality in mind, as a human experience to respect, not just a search problem to solve.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT COACH -->
+  <div class="ethics-section reveal">
+    <span class="section-label">01 — About Coach</span>
+    <h2>Helpful without being dishonest about what it is.</h2>
+    <p>Coach is an AI assistant. It is designed to be warm, direct, and genuinely useful. It is not designed to be a friend, a therapist, or an emotional support system. That distinction matters.</p>
+    <p>There is growing evidence that AI tools which simulate emotional intimacy can cause real harm, particularly for people who are already struggling. Some products are built to maximize how much time users spend talking to them, in ways that do not serve the user's actual interests. Shortlist is intentionally designed differently.</p>
+    <p>Coach is trained to be encouraging without pretending to be something it is not. Many AI tools say things like <strong>"I'm so proud of you"</strong> or <strong>"I care about how this goes for you."</strong> Coach is designed to give that credit to the person who actually earned it. Saying "you should be proud of yourself" is more honest than claiming the feeling for a tool that cannot have it. That was a deliberate choice.</p>
+
+    <div class="callout">
+      <p>This is not a guarantee that Coach will always get it right. It is a commitment to trying, and to continuing to improve.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- IF YOU'RE STRUGGLING -->
+  <div class="ethics-section reveal">
+    <span class="section-label">02 — If you're struggling</span>
+    <h2>Some things need more than a job search tool.</h2>
+    <p>Job searching can surface a lot more than just career questions. If you find yourself in a hard place, Coach is designed to recognize that and point you toward real support rather than try to fill a role it cannot fill.</p>
+    <p>If you're having thoughts of hurting yourself, or just need someone to talk to, these resources are free, confidential, and staffed by real people:</p>
+
+    <div class="crisis-block">
+      <div class="crisis-resource">
+        <span class="crisis-resource-name">988 Suicide & Crisis Lifeline</span>
+        <span class="crisis-resource-detail">Call or text 988</span>
+        <span class="crisis-resource-desc">Available 24/7. Free and confidential.</span>
+      </div>
+      <div class="crisis-resource">
+        <span class="crisis-resource-name">Crisis Text Line</span>
+        <span class="crisis-resource-detail">Text HOME to 741741</span>
+        <span class="crisis-resource-desc">Available 24/7. Free and confidential text-based support.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- YOUR DATA -->
+  <div class="ethics-section reveal">
+    <span class="section-label">03 — Your data</span>
+    <h2>Everything stays on your machine.</h2>
+    <p>Shortlist runs entirely on your computer. Your profiles, your job matches, your Coach conversations, and your Tracker data never leave your device. There is no account, no cloud sync, and no data collected about how you use the app.</p>
+    <p>What you share with Coach stays on your machine. Full stop.</p>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing reveal">
+    <p>Shortlist was built by one person who knows exactly what it feels like to need a tool like this. These choices are personal.</p>
+  </div>
+
+</div>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    document.getElementById('progress').style.width = progress + '%';
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
