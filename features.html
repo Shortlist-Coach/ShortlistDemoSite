@@ -33,6 +33,7 @@
     .streak:nth-child(5) { top: 88%; width: 220px; background: linear-gradient(90deg,transparent,var(--cyan),transparent); animation-duration: 10s; animation-delay: 1s; }
     @keyframes streakSlide { 0% { left: -320px; opacity: 0; } 8% { opacity: 0.6; } 85% { opacity: 0.3; } 100% { left: 110%; opacity: 0; } }
 
+    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: rgba(11,12,26,0.92); backdrop-filter: blur(14px);
@@ -45,6 +46,32 @@
     .nav-links a:hover { color: var(--cyan); }
     .nav-links .back { color: var(--faint); }
     .nav-links .back:hover { color: var(--muted); }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 8px; background: none; border: none; z-index: 101;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: all 0.25s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--cyan); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--cyan); }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none; position: fixed; top: 56px; left: 0; right: 0;
+      background: rgba(11,12,26,0.98); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border); padding: 24px; z-index: 99;
+      flex-direction: column; gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Space Mono', monospace; font-size: 13px; color: var(--muted);
+      text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--border);
+      letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--cyan); }
 
     section { position: relative; z-index: 1; }
     .container { max-width: 1080px; margin: 0 auto; padding: 0 48px; }
@@ -65,12 +92,7 @@
 
     /* FEATURE GRID */
     .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-    .feat-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; padding: 28px 24px;
-      transition: border-color 0.2s, transform 0.2s;
-      position: relative; overflow: hidden;
-    }
+    .feat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 28px 24px; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
     .feat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
     .feat-card.cyan::before { background: var(--cyan); }
     .feat-card.yellow::before { background: var(--yellow); }
@@ -81,18 +103,14 @@
     .feat-card h3 { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 10px; line-height: 1.4; }
     .feat-card p { font-size: 14px; color: var(--muted); line-height: 1.65; margin: 0; }
 
-    /* TWO COLUMN LAYOUT */
+    /* TWO COLUMN */
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-top: 16px; }
     .two-col-text h3 { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
     .two-col-text p { font-size: 15px; color: var(--muted); margin-bottom: 16px; line-height: 1.7; }
     .two-col-text p:last-child { margin-bottom: 0; }
 
     /* MOCK CARD */
-    .mock-card {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 12px; padding: 20px;
-      position: relative; overflow: hidden;
-    }
+    .mock-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
     .mock-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 12px 0 0 12px; }
     .mock-card.exc::before { background: var(--yellow); box-shadow: 0 0 8px var(--yellow); }
     .mock-card.str::before { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
@@ -117,8 +135,6 @@
     .mock-bullet.pos { color: #4CAF50; }
     .mock-bullet.neg { color: var(--orange); }
     .mock-bullet.neu { color: var(--muted); }
-    .mock-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 8px; }
-    .mock-gap { margin-top: 16px; }
 
     /* KANBAN MOCK */
     .kanban-mock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 8px; }
@@ -142,8 +158,8 @@
     .eval-tab { font-family: 'Space Mono', monospace; font-size: 11px; padding: 8px 16px; color: var(--faint); border-bottom: 2px solid transparent; margin-bottom: -1px; }
     .eval-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
     .eval-input-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .eval-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); }
-    .eval-btn { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); font-family: 'Space Mono', monospace; font-size: 11px; padding: 8px 14px; border-radius: 6px; }
+    .eval-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .eval-btn { background: transparent; border: 1px solid var(--cyan); color: var(--cyan); font-family: 'Space Mono', monospace; font-size: 11px; padding: 8px 14px; border-radius: 6px; white-space: nowrap; }
     .eval-result { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--cyan); border-radius: 6px; padding: 12px 14px; }
     .eval-result-title { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
     .eval-result-co { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
@@ -166,18 +182,13 @@
     .chat-bub.c { background: rgba(0,229,255,0.07); border: 1px solid rgba(0,229,255,0.18); color: #cce8ff; }
     .chat-bub.u { background: rgba(245,230,66,0.06); border: 1px solid rgba(245,230,66,0.15); color: #fffde0; }
 
-    /* SECTION COLORS */
     .label-cyan { color: var(--cyan); }
     .label-yellow { color: var(--yellow); }
     .label-pink { color: var(--pink); }
     .label-orange { color: var(--orange); }
 
     /* PRIVACY BLOCK */
-    .privacy-block {
-      background: var(--surface); border: 1px solid var(--border);
-      border-left: 3px solid var(--cyan); border-radius: 0 10px 10px 0;
-      padding: 32px 36px; margin-top: 40px;
-    }
+    .privacy-block { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--cyan); border-radius: 0 10px 10px 0; padding: 32px 36px; margin-top: 40px; }
     .privacy-block h3 { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--cyan); margin-bottom: 12px; }
     .privacy-block p { font-size: 15px; color: var(--muted); margin-bottom: 12px; line-height: 1.7; }
     .privacy-block p:last-child { margin-bottom: 0; }
@@ -197,6 +208,7 @@
     footer { padding: 40px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
     .footer-logo { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--yellow); text-shadow: 0 0 12px rgba(245,230,66,0.3); }
     .footer-right { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); text-align: right; }
+    .footer-copyright { text-align: center; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); padding: 16px 0 24px; position: relative; z-index: 1; }
 
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -205,10 +217,18 @@
 
     @media (max-width: 760px) {
       nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       .container { padding: 0 20px; }
-      .two-col, .kanban-mock { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+      .kanban-mock { grid-template-columns: 1fr 1fr; }
       footer { flex-direction: column; align-items: flex-start; }
       .footer-right { text-align: left; }
+      .privacy-block { padding: 24px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .kanban-mock { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -230,7 +250,20 @@
     <li><a href="index.html" class="back">← Build Log</a></li>
     <li><a href="ethics.html">Ethics</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="#matching" onclick="closeMobileMenu()">Matching</a>
+  <a href="#evaluations" onclick="closeMobileMenu()">Evaluations</a>
+  <a href="#tracker" onclick="closeMobileMenu()">Tracker</a>
+  <a href="#coach" onclick="closeMobileMenu()">Coach</a>
+  <a href="#privacy" onclick="closeMobileMenu()">Privacy</a>
+  <a href="index.html" onclick="closeMobileMenu()">← Build Log</a>
+  <a href="ethics.html" onclick="closeMobileMenu()">Ethics</a>
+</div>
 
 <!-- HERO -->
 <section>
@@ -243,14 +276,13 @@
 </div>
 </section>
 
-<!-- HOW IT WORKS FLOW -->
+<!-- HOW IT WORKS -->
 <section>
 <div class="container">
   <div class="feat-section reveal">
     <span class="feat-label label-cyan">How it works</span>
     <h2>Four steps from stranger to shortlist.</h2>
     <p class="desc">Shortlist is designed around a simple idea: you describe yourself, and the tool gets to work. No Boolean strings. No dropdown hell.</p>
-
     <div class="flow-list">
       <div class="flow-item">
         <div class="flow-num">01</div>
@@ -292,12 +324,11 @@
     <span class="feat-label label-yellow">Job Matching</span>
     <h2>Scored against the whole picture. Explained before you click.</h2>
     <p class="desc">Every result comes with a score, a tier, and a plain-language breakdown of what matched, what was unknown, and what to watch out for. You'll never click into a job and realize 30 seconds in that it was never even close.</p>
-
     <div class="two-col">
       <div class="two-col-text">
         <h3>How scoring works</h3>
         <p>Jobs are scored 1-10 against your profile using Claude. The score reflects the whole picture, not just title matching, including location preference confirmation, salary alignment, company type, values fit, and deal-breaker detection.</p>
-        <p>Results are also weighted by ATS platform quality. Roles from Greenhouse, Lever, and Ashby get a ranking boost because those platforms tend to attract more established, intentional employers. Workday is deprioritized by default (and job seekers know why), but you can adjust this in Preferences.</p>
+        <p>Results are also weighted by ATS platform quality. Roles from Greenhouse, Lever, and Ashby get a ranking boost because those platforms tend to attract more established, intentional employers. Workday is deprioritized by default, but you can adjust this in Preferences.</p>
         <h3 style="margin-top:28px">Score tiers</h3>
         <p>9-10: Exceptional. 7-8: Strong Match. 5-6: Close Match. Weak matches are filtered out by default. The threshold is adjustable.</p>
       </div>
@@ -354,7 +385,6 @@
     <span class="feat-label label-cyan">Evaluations</span>
     <h2>Paste a link. Get a score. Keep what you find.</h2>
     <p class="desc">Beyond the automated search, you can evaluate any job you come across manually. Paste a single job link or point Shortlist at a company careers page and it will find and score every relevant role for you.</p>
-
     <div class="two-col">
       <div>
         <div class="eval-mock">
@@ -396,7 +426,6 @@
     <span class="feat-label label-pink">Job Pipeline Tracker</span>
     <h2>From match to hired. All in one place.</h2>
     <p class="desc">When you mark a role as Applied in My Shortlist, it moves to the Tracker — a kanban board that takes you all the way through the hiring process with tools for every stage.</p>
-
     <div class="kanban-mock" style="margin-bottom:40px">
       <div class="kanban-col">
         <div class="kanban-col-header">Applied <span class="kanban-count">1</span></div>
@@ -431,7 +460,6 @@
         </div>
       </div>
     </div>
-
     <div class="feat-grid">
       <div class="feat-card cyan">
         <div class="feat-icon">📋</div>
@@ -446,7 +474,7 @@
       <div class="feat-card pink">
         <div class="feat-icon">🎉</div>
         <h3>HIRED! celebration</h3>
-        <p>When you accept an offer and mark it HIRED!, the app throws a full celebration — glow worms, confetti, the works. Then Coach opens automatically to help you prep for day one.</p>
+        <p>When you accept an offer and mark it HIRED!, the app throws a full celebration — glow worms, confetti, the works. Then Coach is ready to help you prep for day one.</p>
       </div>
       <div class="feat-card orange">
         <div class="feat-icon">📝</div>
@@ -465,7 +493,6 @@
     <span class="feat-label label-cyan">Coach</span>
     <h2>A job search assistant that actually listens for the signal.</h2>
     <p class="desc">Coach is a persistent AI assistant available throughout the app. It built your profile, it knows your preferences, and it knows exactly where you are in your search. It gives different help at different stages, and it stays out of the way when you don't need it.</p>
-
     <div class="two-col">
       <div>
         <div class="chat-mock">
@@ -491,7 +518,7 @@
       </div>
       <div class="two-col-text">
         <h3>Stage-aware help</h3>
-        <p>Coach opens with a different greeting depending on where you are. <br><strong>Applied:</strong> it offers to help with follow-up or phone screen prep. <br><strong>Interviewing:</strong> interview questions, STAR stories, company research, thank you emails. <br><strong>Offer:</strong> evaluation and negotiation. It never surfaces the wrong tools at the wrong time.</p>
+        <p>Coach opens with a different greeting depending on where you are. <strong>Applied:</strong> it offers to help with follow-up or phone screen prep. <strong>Interviewing:</strong> interview questions, STAR stories, company research, thank you emails. <strong>Offer:</strong> evaluation and negotiation. It never surfaces the wrong tools at the wrong time.</p>
         <h3>Knows your profile</h3>
         <p>Coach has full context on your profile, your conversation history, your current stage, any notes you've added, and the full job description for the role you're working on. Prep is specific, not generic.</p>
         <h3>In-scope by design</h3>
@@ -509,7 +536,6 @@
     <span class="feat-label label-orange">Privacy and Architecture</span>
     <h2>Your data lives on your machine. Full stop.</h2>
     <p class="desc">Shortlist is a local Mac application. There is no Shortlist server. There is no account. There is no algorithm learning from your job search. Here's exactly what goes where.</p>
-
     <div class="privacy-block">
       <h3>What stays on your machine</h3>
       <p>Your profiles, your Coach conversation history, the documents you upload, your API keys, your Tracker data, your saved evaluations, your preferences. All of it. None of it leaves your computer through Shortlist.</p>
@@ -529,7 +555,6 @@
     <span class="feat-label label-yellow">What You Need</span>
     <h2>Two API keys and five minutes.</h2>
     <p class="desc">Shortlist runs on your Mac. You bring two API keys. A setup guide is included with your download.</p>
-
     <div class="feat-grid">
       <div class="feat-card yellow">
         <div class="feat-icon">🍎</div>
@@ -561,13 +586,44 @@
   </footer>
 </div>
 
+<p class="footer-copyright" id="copyright"></p>
+
 <script>
+  // Reveal on scroll
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.08 });
   reveals.forEach(el => obs.observe(el));
+
+  // Mobile hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', !isOpen);
+    hamburger.classList.toggle('open', !isOpen);
+    hamburger.setAttribute('aria-expanded', String(!isOpen));
+    hamburger.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+  });
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
+
+  // Copyright
+  document.getElementById('copyright').textContent = '© ' + new Date().getFullYear() + ' Nan Doud';
 </script>
-  <p style="text-align:center; font-family:'Space Mono',monospace; font-size:11px; color:var(--faint); padding: 24px 0;"><script>document.write('© ' + new Date().getFullYear() + ' Nan Doud')</script></p>
+
 </body>
 </html>
