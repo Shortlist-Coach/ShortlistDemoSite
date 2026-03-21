@@ -51,6 +51,7 @@
       box-shadow: 0 0 8px rgba(0,229,255,0.6);
     }
 
+    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: rgba(11,12,26,0.92);
@@ -68,7 +69,7 @@
       display: flex; align-items: center; gap: 10px;
       text-shadow: 0 0 16px rgba(245,230,66,0.4);
     }
-    .nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+    .nav-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); flex-shrink: 0; }
     .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
     .nav-links a {
       font-size: 12px; color: var(--muted);
@@ -84,8 +85,50 @@
     }
     .nav-cta:hover { background: rgba(0,229,255,0.08) !important; border-color: var(--cyan) !important; }
 
-    .container { max-width: 960px; margin: 0 auto; padding: 0 40px; }
-    .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 8px;
+      background: none; border: none;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--muted); border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--cyan); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--cyan); }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 56px; left: 0; right: 0;
+      background: rgba(11,12,26,0.98);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 24px;
+      z-index: 99;
+      flex-direction: column; gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Space Mono', monospace; font-size: 13px;
+      color: var(--muted); text-decoration: none;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+      letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--cyan); }
+    .mobile-menu .nav-cta {
+      color: var(--cyan) !important;
+      margin-top: 8px; border-bottom: none !important;
+    }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+    .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
 
     .hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
     .hero-kicker {
@@ -114,21 +157,12 @@
     .video-frame {
       background: var(--surface); border-radius: 10px; overflow: hidden;
       aspect-ratio: 16/9; border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
     }
-    .video-placeholder { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; padding: 40px; }
-    .play-btn {
-      width: 64px; height: 64px; border-radius: 50%;
-      border: 2px solid rgba(0,229,255,0.3);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--cyan); font-size: 22px; cursor: pointer; transition: all 0.2s;
-    }
-    .play-btn:hover { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,229,255,0.3); }
-    .video-note { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--faint); }
+    .video-frame iframe { width: 100%; height: 100%; display: block; }
     .video-caption { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); margin-top: 14px; text-align: center; letter-spacing: 0.04em; }
 
     .section { padding: 64px 0; border-bottom: 1px solid var(--border); }
-.section-num { font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; display: block; }
+    .section-num { font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; display: block; }
     .section h2 {
       font-family: 'Space Mono', monospace; font-size: clamp(18px, 2.5vw, 26px);
       font-weight: 700; line-height: 1.3; color: var(--text); margin-bottom: 28px;
@@ -161,7 +195,7 @@
 
     .prompt-block {
       background: #070813; border-radius: 8px; padding: 28px 32px; margin: 32px 0;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border); overflow-x: auto;
     }
     .prompt-label {
       font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em;
@@ -185,15 +219,6 @@
     .lesson-body h4 { font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
     .lesson-body p { font-size: 15px; color: var(--muted); margin: 0; }
 
-    .status-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
-    .status-table th { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); text-align: left; padding: 10px 0; border-bottom: 1px solid var(--cyan); }
-    .status-table td { font-size: 14px; padding: 12px 0; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: top; }
-    .status-table td:first-child { color: var(--text); padding-right: 24px; width: 50%; }
-    .pill { display: inline-block; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.06em; padding: 3px 8px; border-radius: 20px; }
-    .pill.done { background: rgba(0,229,255,0.12); color: var(--cyan); border: 1px solid rgba(0,229,255,0.3); }
-    .pill.wip { background: rgba(255,107,43,0.12); color: var(--orange); border: 1px solid rgba(255,107,43,0.3); }
-    .pill.later { background: rgba(68,72,96,0.4); color: var(--faint); border: 1px solid var(--border); }
-
     .about-block { padding: 56px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
     .about-block h2 { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 20px; }
     .about-block p { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
@@ -205,19 +230,48 @@
     .skill-list { display: flex; flex-wrap: wrap; gap: 8px; }
     .skill { font-family: 'Space Mono', monospace; font-size: 11px; padding: 4px 10px; border-radius: 3px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
 
+    /* BUILD LOG */
+    .build-log-section { padding: 80px 0; background: var(--bg); position: relative; z-index: 1; }
+    .build-log-kicker { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 16px; }
+    .build-log-title { font-family: 'Space Mono', monospace; font-size: clamp(22px,3vw,32px); font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    .build-log-desc { color: var(--muted); font-size: 16px; margin-bottom: 48px; max-width: 600px; }
+    .log-entries { border-top: 1px solid var(--border); }
+    .log-entry { border-bottom: 1px solid var(--border); }
+    .log-header {
+      width: 100%; display: flex; align-items: baseline; gap: 16px;
+      padding: 20px 0; background: transparent; border: none;
+      cursor: pointer; text-align: left; color: var(--text);
+    }
+    .log-header:hover .log-summary { color: var(--cyan); }
+    .log-date { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--muted); white-space: nowrap; min-width: 120px; }
+    .log-summary { font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text); flex: 1; transition: color 0.2s; }
+    .log-chevron { font-size: 10px; color: var(--faint); transition: transform 0.2s; white-space: nowrap; }
+    .log-header[aria-expanded="true"] .log-chevron { transform: rotate(90deg); }
+    .log-body { display: none; padding: 0 0 24px 136px; }
+    .log-body.open { display: block; }
+    .log-body ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .log-body ul li { font-size: 14px; color: var(--muted); line-height: 1.6; padding-left: 16px; position: relative; }
+    .log-body ul li::before { content: '–'; position: absolute; left: 0; color: var(--faint); }
+
+    /* FOOTER */
     footer { padding: 40px 0; border-top: 1px solid var(--border); position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
     .footer-left { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--faint); }
     .footer-left strong { color: var(--yellow); display: block; font-size: 14px; margin-bottom: 4px; text-shadow: 0 0 12px rgba(245,230,66,0.3); }
     .footer-right { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); text-align: right; }
+    .footer-copyright { text-align: center; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); padding: 16px 0 24px; position: relative; z-index: 1; }
 
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
 
+    /* MOBILE */
     @media (max-width: 720px) {
       nav { padding: 0 20px; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       .container, .container-wide { padding: 0 20px; }
       .hero { padding: 48px 0 40px; }
       .two-col { grid-template-columns: 1fr; }
@@ -225,6 +279,11 @@
       .lesson { grid-template-columns: 24px 1fr; gap: 14px; }
       footer { flex-direction: column; align-items: flex-start; }
       .footer-right { text-align: left; }
+      .log-header { flex-wrap: wrap; gap: 8px; }
+      .log-date { min-width: unset; }
+      .log-body { padding-left: 0; }
+      .build-log-section { padding: 48px 0; }
+      .prompt-block { padding: 20px; }
     }
   </style>
 </head>
@@ -251,7 +310,20 @@
     <li><a href="features.html" class="nav-cta">See the Features</a></li>
     <li><a href="ethics.html">Ethics</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="#problem" onclick="closeMobileMenu()">The Problem</a>
+  <a href="#how" onclick="closeMobileMenu()">How I Built It</a>
+  <a href="#decisions" onclick="closeMobileMenu()">Decisions</a>
+  <a href="#learned" onclick="closeMobileMenu()">What I Learned</a>
+  <a href="#status" onclick="closeMobileMenu()">Current State</a>
+  <a href="features.html" class="nav-cta">See the Features</a>
+  <a href="ethics.html" onclick="closeMobileMenu()">Ethics</a>
+</div>
 
 <!-- HERO -->
 <div class="container">
@@ -281,8 +353,7 @@
 <div class="container">
   <div class="video-block reveal">
     <div class="video-frame">
-<iframe width="809" height="455" src="https://www.youtube.com/embed/E14Uk4Mgd_A?si=U_GdZuwRZENu15PR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
+      <iframe src="https://www.youtube.com/embed/E14Uk4Mgd_A?si=U_GdZuwRZENu15PR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     </div>
     <p class="video-caption">Demo walkthrough — condensed for time. The Coach conversation runs longer in practice.</p>
   </div>
@@ -293,17 +364,12 @@
   <div class="section reveal" id="problem">
     <span class="section-num">01 — The Problem</span>
     <h2>Job search tools were built for databases. Not people.</h2>
-
     <p>I've spent years inside product and operations teams watching how friction accumulates when nobody asks whether the flow actually works for the person using it. When I started job searching in earnest recently, I turned that same lens on the process itself.</p>
-
     <p>Traditional job boards are not human-optimized in a number of ways. They let you enter a title, select a few other preferences from dropdowns, and check "remote" and call that a search. They have no way to capture what I'd walk away from, or what kind of environment empowers me to do my best work, or that I've been quietly drawn to automation-forward companies for years without quite knowing how to boil it all down.</p>
-
     <div class="pull-quote">
       <p>"A job search should start with a conversation, not a form. The thinking behind Shortlist is that simple."</p>
     </div>
-
     <p>So I built something that starts with a conversation instead. After uploading any documents you would like to have it take into consideration (e.g., resumes, previous interview prep materials, etc.) an AI coach then interviews you about your actual experience, values, and preferences. It synthesizes that into a structured profile. Then it scores job listings against the whole picture and surfaces results with plain-language explanations. Currently, everything runs locally on your machine.</p>
-
     <div class="two-col">
       <div class="col-card">
         <h4>What wasn't working</h4>
@@ -334,23 +400,16 @@
   <div class="section reveal" id="how">
     <span class="section-num">02 — How I Built It</span>
     <h2>The stack, the approach, and how I actually worked.</h2>
-
     <h3>The Stack</h3>
     <p>Python and Flask on the backend. Plain HTML, CSS, and JavaScript on the front end with no framework. The Claude API powers the Coach conversation, profile synthesis, and job scoring. JSearch via RapidAPI pulls job listing data. Everything runs locally, packaged for distribution via PyInstaller.</p>
-
     <h3>Working with Claude Code</h3>
     <p>I am not a software engineer. While I possess basic HTML and CSS skills, I want to be upfront about that. I used a combination of Claude chat and Claude Code extensively throughout this build. Claude Code is an agentic coding tool that writes, runs, and debugs code directly. My job was to think clearly about what I wanted, communicate it precisely, and make good decisions about what it produced. Using Claude chat to formulate the best possible prompts had me moving in the right direction and at the rapid clip of my ideation from the get go.</p>
-
     <p>That turned out to be most of the job.</p>
-
     <p>Every feature in this app started as a conversation with Claude chat that led to a thorough prompt that fed Claude Code exactly what it needed to start building my idea into reality. I used Claude chat as a tutor to help me create strong prompts that included: a structured spec with clear behavior definitions, edge cases, implementation notes, and test criteria. In tandem with Claude chat, I wrote hundreds of these over the course of the build.</p>
-
     <div class="callout">
       <p><strong>Writing a good Claude Code prompt requires the same skills as writing a good project brief.</strong> Clear problem framing, explicit success criteria, awareness of edge cases, and enough systems thinking to anticipate what could go wrong. The prompts are artifacts of structured thinking, not just instructions to a machine.</p>
     </div>
-
     <p>Here's an example from the ATS quality weighting feature, which scores job results higher when they come from Greenhouse, Lever, or Ashby (platforms that tend to attract more established, intentional employers):</p>
-
     <div class="prompt-block">
       <span class="prompt-label">Sample Claude Code Prompt — ATS Quality Weighting</span>
       <span class="prompt-text">I want to add ATS-based quality weighting to the search results pipeline.
@@ -386,10 +445,8 @@ IMPLEMENTATION NOTES
 - Log detected ATS and final_score to console during development
 - Manually evaluated jobs in My Shortlist tab are not affected</span>
     </div>
-
     <h3>What I'm Actually Doing All Day</h3>
     <p>On any given day I am doing some mix of identifying what isn't working and figuring out why, writing prompts that specify what I want with enough precision that the output is actually usable, reviewing what got built, testing it, and deciding what to change next. I am also making product decisions about what to build, what to cut, and what the right UX pattern is. And I am writing copy — app UI, landing page, legal docs, LinkedIn posts. And designing two full visual themes.</p>
-
     <p>This is obviously not how most software has historically been built at scale. But it is teaching me a lot about what clear thinking looks like in practice, and how much leverage you can get from communication skills when the tools are this capable.</p>
   </div>
 </div>
@@ -399,22 +456,15 @@ IMPLEMENTATION NOTES
   <div class="section reveal" id="decisions">
     <span class="section-num">03 — Product Decisions</span>
     <h2>Some things I got right. Some things I'm still fixing.</h2>
-
     <h3>What I Got Right</h3>
-<p>The Coach conversation model was right from day one. The whole product rests on the idea that you should be able to describe yourself in natural language and the tool does the translation. Every feature decision downstream flows from that.</p>
-
-<p>Making the profile fully editable was the most important trust decision I made. AI synthesizes well but it also overstates and occasionally invents details that sound plausible. A job seeker's profile is not the place to let that slide. Keeping the user in control of their own representation is how a tool earns trust.</p>
-
-<p>The three-tab structure on the Evaluations page took several iterations to get right. Longlist, My Finds, My Shortlist. That progression reflects a real mental model and it matters.</p>
-
-<p>The Tracker was a late addition, and it might be the most useful feature in the app. Moving from passive matching to active pipeline management, with interview tracking, interviewer profiles, a salary negotiation workspace, and a Lessons Learned field per role, closes a gap that no other tool I know of addresses cleanly.</p>
-
+    <p>The Coach conversation model was right from day one. The whole product rests on the idea that you should be able to describe yourself in natural language and the tool does the translation. Every feature decision downstream flows from that.</p>
+    <p>Making the profile fully editable was the most important trust decision I made. AI synthesizes well but it also overstates and occasionally invents details that sound plausible. A job seeker's profile is not the place to let that slide. Keeping the user in control of their own representation is how a tool earns trust.</p>
+    <p>The three-tab structure on the Evaluations page took several iterations to get right. Longlist, My Finds, My Shortlist. That progression reflects a real mental model and it matters.</p>
+    <p>The Tracker was a late addition, and it might be the most useful feature in the app. Moving from passive matching to active pipeline management, with interview tracking, interviewer profiles, a salary negotiation workspace, and a Lessons Learned field per role, closes a gap that no other tool I know of addresses cleanly.</p>
     <h3>What I'm Still Fixing</h3>
     <p>Coach interactions are being refined for pacing and precision. Early versions were verbose in ways that felt more like being talked at than talked to. Current work involves tuning streaming speed, tightening response length, and adding contextual quick reply buttons so the conversation feels like a smart collaborator who knows where you are in the process.</p>
-
-<p>Longlist search reliability is an open problem. While it is fully functional, it is limited by the number of calls permitted with a free RapidAPI account (200 calls per month). That's not a question of functionality, it's a question of ROI.</p>
-
-<p>Getting the Longlist right matters. It is the feature most people will reach for first, and an empty result screen is a bad first impression for a tool built around finding you the right job.</p>
+    <p>Longlist search reliability is an open problem. While it is fully functional, it is limited by the number of calls permitted with a free RapidAPI account (200 calls per month). That's not a question of functionality, it's a question of ROI.</p>
+    <p>Getting the Longlist right matters. It is the feature most people will reach for first, and an empty result screen is a bad first impression for a tool built around finding you the right job.</p>
     <h3>Decisions I Deferred Deliberately</h3>
     <p>Windows support, PyInstaller packaging, and the Gumroad listing are all on the roadmap, but not done. I decided to keep building features rather than packaging for distribution while the product is still in the very early evolutionary phases. The product I'd have shipped right away was nowhere near as robust as what I have now. The fact that it took me just a few weeks to get the product to where it is now speaks not only to the power of the AI collaboration, both to brainstorm and build, but to the power of imagination and determination when technology finally catches up to how your mind works. I haven't had this much fun in years!</p>
   </div>
@@ -425,55 +475,51 @@ IMPLEMENTATION NOTES
   <div class="section reveal" id="learned">
     <span class="section-num">04 — What I Learned</span>
     <h2>The things I'd tell myself at the start.</h2>
-
-   <div class="lesson">
-  <div class="lesson-num">01</div>
-  <div class="lesson-body">
-    <h4>Precision is the skill.</h4>
-    <p>Vague prompts produce vague output. Specificity is crucial, whether you directly author the prompts yourself or in thought partnership with Claude. You can't be precise about something you haven't thought through clearly. Talking out the goal and your perceived concerns about how to get there will help you figure out how to compose your prompts.</p>
+    <div class="lesson">
+      <div class="lesson-num">01</div>
+      <div class="lesson-body">
+        <h4>Precision is the skill.</h4>
+        <p>Vague prompts produce vague output. Specificity is crucial, whether you directly author the prompts yourself or in thought partnership with Claude. You can't be precise about something you haven't thought through clearly. Talking out the goal and your perceived concerns about how to get there will help you figure out how to compose your prompts.</p>
+      </div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">02</div>
+      <div class="lesson-body">
+        <h4>Systems break at the seams.</h4>
+        <p>Almost every bug happened at the boundary between two features. Keeping a mental model of how the whole thing fits together matters as much as writing good individual prompts.</p>
+      </div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">03</div>
+      <div class="lesson-body">
+        <h4>Ship the wrong thing and then fix it.</h4>
+        <p>A thing that exists and is wrong is more useful than a perfect spec for something that doesn't. I iterated fastest on the features I could actually look at, react to honestly, and fix specifically.</p>
+      </div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">04</div>
+      <div class="lesson-body">
+        <h4>Good UX writing is a product decision.</h4>
+        <p>Every label, every empty state, every error message is a decision about what the user believes the product does. "Have you applied?" is a better label than "Update status" because it meets the user where they are. These decisions compound.</p>
+      </div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">05</div>
+      <div class="lesson-body">
+        <h4>Design for the failure modes, not just the happy path.</h4>
+        <p>The most important early AI design decision I made was making the profile fully editable. Coach synthesizes well, but it also overstates and occasionally invents details that may sound plausible. For something as consequential as how a person represents themselves to a potential employer, that's not cool. Putting the human in control of the final output was the right choice.</p>
+      </div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-num">06</div>
+      <div class="lesson-body">
+        <h4>Design your AI solution to meet humans where they are.</h4>
+        <p>No one can argue the astonishing speed and wealth of helpful information a brief interaction with an AI assistant can offer. But just because AI is capable of fronting a wall of useful text in milliseconds doesn't mean a human can fully absorb or appreciate the volume and speed. Tuning the speed of Coach and training it to meter its communication for better human-grade consumption made a huge difference in how approachable the whole experience is.</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="lesson">
-  <div class="lesson-num">02</div>
-  <div class="lesson-body">
-    <h4>Systems break at the seams.</h4>
-    <p>Almost every bug happened at the boundary between two features. Keeping a mental model of how the whole thing fits together matters as much as writing good individual prompts.</p>
-  </div>
-</div>
-
-<div class="lesson">
-  <div class="lesson-num">03</div>
-  <div class="lesson-body">
-    <h4>Ship the wrong thing and then fix it.</h4>
-    <p>Shipping something wrong and fixing it beats planning something perfect that never ships.</p>
-  </div>
-</div>
-
-<div class="lesson">
-  <div class="lesson-num">04</div>
-  <div class="lesson-body">
-    <h4>Good UX writing is a product decision.</h4>
-    <p>Every label, every empty state, every error message is a decision about what the user believes the product does. "Have you applied?" is a better label than "Update status" because it meets the user where they are. These decisions compound.</p>
-  </div>
-</div>
-
-<div class="lesson">
-  <div class="lesson-num">05</div>
-  <div class="lesson-body">
-    <h4>Design for the failure modes, not just the happy path.</h4>
-    <p>The most important early AI design decision I made was making the profile fully editable. Coach synthesizes well, but it also overstates and <em>occasionally</em> invents details that may sound plausible. For something as consequential as how a person represents themselves to a potential employer, that's not cool. Putting the human in control of the final output was the right choice.</p>
-  </div>
-</div>
-    
-<div class="lesson">
-  <div class="lesson-num">06</div>
-  <div class="lesson-body">
-    <h4>Design your AI solution to meet humans where they are.</h4>
-    <p>No one can argue the astonishing speed and wealth of helpful information a brief interaction with an AI assistant can offer. But just because AI is capable of fronting a wall of useful text in a .3 milliseconds doesn't mean a human can fully absorb or appreciate the volume and speed. Tuning the speed of Coach and training it to meter its communication for better human-grade consumption made a huge difference in how approachable the whole experience is.</p>
-  </div>
-</div>
-    
 <!-- ABOUT -->
 <div class="container">
   <div class="about-block reveal">
@@ -505,31 +551,15 @@ IMPLEMENTATION NOTES
   </div>
 </div>
 
-
-<script>
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const total = document.documentElement.scrollHeight - window.innerHeight;
-    document.getElementById('progress').style.width = (scrolled / total * 100) + '%';
-  });
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  reveals.forEach(el => obs.observe(el));
-</script>
-  <!-- BUILD LOG SECTION - append near bottom of index.html before closing </div> of main container -->
-
-<section id="build-log" style="padding: 80px 0; position: relative; z-index: 1; background: var(--bg);">
-  <div style="max-width: 960px; margin: 0 auto; padding: 0 40px;">
-
-    <span style="font-family:'Space Mono',monospace; font-size:13px; color:var(--cyan); letter-spacing:0.2em; text-transform:uppercase; display:block; margin-bottom:16px;">Build Log</span>
-    <h2 style="font-family:'Space Mono',monospace; font-size:clamp(22px,3vw,32px); font-weight:700; color:var(--text); margin-bottom:12px;">Every day, documented.</h2>
-    <p style="color:var(--muted); font-size:16px; margin-bottom:48px; max-width:600px;">A running record of what got built, what broke, and what was learned. Most recent first.</p>
+<!-- BUILD LOG -->
+<section class="build-log-section" id="build-log">
+  <div class="container">
+    <span class="build-log-kicker">Build Log</span>
+    <h2 class="build-log-title">Every day, documented.</h2>
+    <p class="build-log-desc">A running record of what got built, what broke, and what was learned. Most recent first.</p>
 
     <div class="log-entries">
 
-      <!-- MARCH 17 -->
       <div class="log-entry">
         <button class="log-header" onclick="toggleLog(this)" aria-expanded="false">
           <span class="log-date">Mar 17, 2026</span>
@@ -539,14 +569,13 @@ IMPLEMENTATION NOTES
         <div class="log-body">
           <ul>
             <li>Wrapped column overhauled: outcome selector, HIRED! celebration with start date prompt, rotating affirmations, and card archiving with a settings widget</li>
-            <li>Ethics & AI Philosophy page with deliberate choices around Coach's emotional honesty and crisis resource handoff</li>
+            <li>Ethics &amp; AI Philosophy page with deliberate choices around Coach's emotional honesty and crisis resource handoff</li>
             <li>Coach streaming speed and brevity tuned to feel like a real conversation at roughly 200 WPM</li>
             <li>One apostrophe in "I've" took the whole app down — all Phase 2 work is now committed for the first time. That was scary.</li>
           </ul>
         </div>
       </div>
 
-      <!-- MARCH 16 -->
       <div class="log-entry">
         <button class="log-header" onclick="toggleLog(this)" aria-expanded="false">
           <span class="log-date">Mar 16, 2026</span>
@@ -560,15 +589,13 @@ IMPLEMENTATION NOTES
             <li>Offer column built with salary comparison against floor, Levels.fyi integration (in progress), negotiation tools, and a negotiation log</li>
             <li>Electric Youth light mode launched with a full alternate color palette, toggle in nav and Preferences, and theme-aware animations</li>
             <li>Accessibility pass: Reduce Motion, Font Size, and High Contrast toggles fixed across both themes</li>
-            <li>Applied to a role using the app itself as the answer to the ambiguity question</li>
           </ul>
         </div>
       </div>
 
-      <!-- MARCH 15 (approximate) -->
       <div class="log-entry">
         <button class="log-header" onclick="toggleLog(this)" aria-expanded="false">
-          <span class="log-date">March 14-15 2026</span>
+          <span class="log-date">Mar 14–15, 2026</span>
           <span class="log-summary">Evaluations tab, ATS weighting, careers page scanner, and animated landing page</span>
           <span class="log-chevron">▶</span>
         </button>
@@ -583,10 +610,9 @@ IMPLEMENTATION NOTES
         </div>
       </div>
 
-      <!-- EARLY MARCH -->
       <div class="log-entry">
         <button class="log-header" onclick="toggleLog(this)" aria-expanded="false">
-          <span class="log-date">March 11-13 2026</span>
+          <span class="log-date">Mar 11–13, 2026</span>
           <span class="log-summary">Phase 2 shipped: job matching, Coach widget, search performance, and neon UI polish</span>
           <span class="log-chevron">▶</span>
         </button>
@@ -601,7 +627,6 @@ IMPLEMENTATION NOTES
         </div>
       </div>
 
-      <!-- MARCH 10 -->
       <div class="log-entry">
         <button class="log-header" onclick="toggleLog(this)" aria-expanded="false">
           <span class="log-date">Mar 10, 2026</span>
@@ -618,98 +643,12 @@ IMPLEMENTATION NOTES
         </div>
       </div>
 
-    </div><!-- /log-entries -->
+    </div>
   </div>
 </section>
 
-<style>
-.log-entries {
-  border-top: 1px solid var(--border);
-}
-.log-entry {
-  border-bottom: 1px solid var(--border);
-}
-.log-header {
-  width: 100%;
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  padding: 20px 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  color: var(--text);
-}
-.log-header:hover .log-summary {
-  color: var(--cyan);
-}
-.log-date {
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-  color: var(--muted);
-  white-space: nowrap;
-  min-width: 120px;
-}
-.log-summary {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  color: var(--text);
-  flex: 1;
-  transition: color 0.2s;
-}
-.log-chevron {
-  font-size: 10px;
-  color: var(--faint);
-  transition: transform 0.2s;
-  white-space: nowrap;
-}
-.log-header[aria-expanded="true"] .log-chevron {
-  transform: rotate(90deg);
-}
-.log-body {
-  display: none;
-  padding: 0 0 24px 136px;
-}
-.log-body.open {
-  display: block;
-}
-.log-body ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.log-body ul li {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.6;
-  padding-left: 16px;
-  position: relative;
-}
-.log-body ul li::before {
-  content: '–';
-  position: absolute;
-  left: 0;
-  color: var(--faint);
-}
-@media (max-width: 720px) {
-  .log-header { flex-wrap: wrap; gap: 8px; }
-  .log-date { min-width: unset; }
-  .log-body { padding-left: 0; }
-}
-</style>
-
-<script>
-function toggleLog(btn) {
-  const body = btn.nextElementSibling;
-  const isOpen = btn.getAttribute('aria-expanded') === 'true';
-  btn.setAttribute('aria-expanded', !isOpen);
-  body.classList.toggle('open', !isOpen);
-}
-  <div class="container">
+<!-- FOOTER -->
+<div class="container">
   <footer>
     <div class="footer-left">
       <strong>SHORTLIST — A Build Log</strong>
@@ -722,7 +661,62 @@ function toggleLog(btn) {
   </footer>
 </div>
 
+<p class="footer-copyright" id="copyright"></p>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress').style.width = (scrolled / total * 100) + '%';
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => obs.observe(el));
+
+  // Build log accordion
+  function toggleLog(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    body.classList.toggle('open', !isOpen);
+  }
+
+  // Mobile hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', !isOpen);
+    hamburger.classList.toggle('open', !isOpen);
+    hamburger.setAttribute('aria-expanded', String(!isOpen));
+    hamburger.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+  });
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
+  }
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
+
+  // Copyright
+  document.getElementById('copyright').textContent = '© ' + new Date().getFullYear() + ' Nan Doud';
 </script>
-  <p style="text-align:center; font-family:'Space Mono',monospace; font-size:11px; color:var(--faint); padding: 24px 0;"><script>document.write('© ' + new Date().getFullYear() + ' Nan Doud')</script></p>
+
 </body>
 </html>
