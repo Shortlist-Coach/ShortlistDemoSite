@@ -59,7 +59,7 @@
     nav {
       position: sticky; top: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 48px;
+      padding: 0 48px; height: 56px;
       background: rgba(11,12,26,0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -98,7 +98,7 @@
     }
 
     /* LAYOUT */
-    .container { max-width: 960px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
 
     /* HERO */
     .hero {
@@ -121,7 +121,7 @@
     }
     .hero-lede {
       font-size: 18px; color: var(--muted);
-      max-width: 720px; line-height: 1.7;
+      max-width: 600px; line-height: 1.7;
     }
 
     /* DIVIDER */
@@ -224,11 +224,41 @@
       *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 8px; background: none; border: none; z-index: 101;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; transition: all 0.25s; }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--cyan); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--cyan); }
+
+    /* MOBILE MENU */
+    .mobile-menu {
+      display: none; position: fixed; top: 56px; left: 0; right: 0;
+      background: rgba(11,12,26,0.98); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border); padding: 24px; z-index: 99;
+      flex-direction: column; gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Space Mono', monospace; font-size: 13px; color: var(--muted);
+      text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--border);
+      letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--cyan); }
+
+    .footer-copyright { text-align: center; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--faint); padding: 16px 0 24px; position: relative; z-index: 1; }
+
     @media (max-width: 720px) {
-      nav { padding: 16px 24px; }
-      .nav-links { gap: 16px; }
+      nav { padding: 0 20px; height: 56px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       .container { padding: 0 24px; }
       .hero { padding: 48px 0 40px; }
+      .crisis-block { padding: 24px; }
     }
   </style>
 </head>
@@ -249,7 +279,16 @@
     <li><a href="features.html">Features</a></li>
     <li><a href="ethics.html" class="active">Ethics</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="index.html" onclick="closeMobileMenu()">Build Log</a>
+  <a href="features.html" onclick="closeMobileMenu()">Features</a>
+  <a href="ethics.html" onclick="closeMobileMenu()">Ethics</a>
+</div>
 
 <div class="container">
 
@@ -257,7 +296,7 @@
   <div class="hero reveal">
     <span class="hero-kicker">Ethics & AI Philosophy</span>
     <h1>Built with your<br/><em>wellbeing in mind.</em></h1>
-    <p class="hero-lede">Job searching is one of the more vulnerable things a person can go through. It often involves rejection, uncertainty, loneliness, and a lot of time spent second-guessing yourself. Shortlist was designed with that reality in mind, as a deeply personal human experience to respect, not merely a problem to solve.</p>
+    <p class="hero-lede">Job searching is one of the more vulnerable things a person can go through. It involves rejection, uncertainty, and a lot of time spent second-guessing yourself. Shortlist was designed with that reality in mind, as a human experience to respect, not just a search problem to solve.</p>
   </div>
 
   <div class="divider"></div>
@@ -266,12 +305,12 @@
   <div class="ethics-section reveal">
     <span class="section-label">01 — About Coach</span>
     <h2>Helpful without being dishonest about what it is.</h2>
-    <p>Coach is an AI assistant. A machine. It's designed to be warm, direct, and genuinely useful. It is not designed to be a friend, a therapist, or an emotional support system.</p>
-    <p>There is growing evidence that AI tools, which can simulate emotional intimacy, can cause real harm, particularly for people who are already struggling. Some products are expressly designed to maximize how much time people spend talking to them, in ways that are opposed to individuals' actual, if perhaps not perceived, best interests. Shortlist is intentionally designed differently.</p>
-    <p>Coach is trained to be encouraging without pretending to be something it is not. Many AI tools might say things like <strong>"I'm so proud of you"</strong> or <strong>"I care about how this goes for you."</strong> Coach is designed to give that credit to the person who actually earned it. Saying "you should be proud of yourself" is more honest than claiming the feeling for a machine that is incapable of feeling. Again, this is intentional.</p>
+    <p>Coach is an AI assistant. It is designed to be warm, direct, and genuinely useful. It is not designed to be a friend, a therapist, or an emotional support system. That distinction matters.</p>
+    <p>There is growing evidence that AI tools which simulate emotional intimacy can cause real harm, particularly for people who are already struggling. Some products are built to maximize how much time users spend talking to them, in ways that do not serve the user's actual interests. Shortlist is intentionally designed differently.</p>
+    <p>Coach is trained to be encouraging without pretending to be something it is not. Many AI tools say things like <strong>"I'm so proud of you"</strong> or <strong>"I care about how this goes for you."</strong> Coach is designed to give that credit to the person who actually earned it. Saying "you should be proud of yourself" is more honest than claiming the feeling for a tool that cannot have it. That was a deliberate choice.</p>
 
     <div class="callout">
-      <p>This is not a guarantee that Coach will always get it right. It is a human commitment on the part of its designer, trainer, and builder to do the best possible job in this regard and to always strive for continuous improvement.</p>
+      <p>This is not a guarantee that Coach will always get it right. It is a commitment to trying, and to continuing to improve.</p>
     </div>
   </div>
 
@@ -280,9 +319,9 @@
   <!-- IF YOU'RE STRUGGLING -->
   <div class="ethics-section reveal">
     <span class="section-label">02 — If you're struggling</span>
-    <h2>Some circumstances call for more than a job search tool.</h2>
-    <p>Job searching can bring up a lot more than just career questions. If you find yourself in an emotionally or mentally difficult place, Coach is designed to recognize that and point you toward real support rather than try to fill a role it is designed not to fill.</p>
-    <p>If you're having thoughts of hurting yourself, or just need someone to talk to, these resources are free, confidential, and staffed by real, empathetic, trained people who genuinely care:</p>
+    <h2>Some things need more than a job search tool.</h2>
+    <p>Job searching can surface a lot more than just career questions. If you find yourself in a hard place, Coach is designed to recognize that and point you toward real support rather than try to fill a role it cannot fill.</p>
+    <p>If you're having thoughts of hurting yourself, or just need someone to talk to, these resources are free, confidential, and staffed by real people:</p>
 
     <div class="crisis-block">
       <div class="crisis-resource">
@@ -304,13 +343,13 @@
   <div class="ethics-section reveal">
     <span class="section-label">03 — Your data</span>
     <h2>Everything stays on your machine.</h2>
-    <p>Shortlist runs entirely on your computer. Your profiles, your job matches, your Coach conversations, and your Tracker data never leave your device. There is no Shortlist account, no cloud sync, and no data collected by Shortlist about how you use the app.</p>
-    <p>What you share with Coach stays on your machine. Full stop. What you share with Coach stays on your machine. Be aware that calls made using Anthropic and RapidAPI are subject to those parties' terms of service.</p>
+    <p>Shortlist runs entirely on your computer. Your profiles, your job matches, your Coach conversations, and your Tracker data never leave your device. There is no account, no cloud sync, and no data collected about how you use the app.</p>
+    <p>What you share with Coach stays on your machine. Full stop.</p>
   </div>
 
   <!-- CLOSING -->
   <div class="closing reveal">
-    <p>Shortlist was built by one person who knows exactly what it feels like to need a fully customized job search tool. These choices are personal.</p>
+    <p>Shortlist was built by one person who knows exactly what it feels like to need a tool like this. These choices are personal.</p>
   </div>
 
 </div>
@@ -335,7 +374,37 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+
+  // Mobile hamburger
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', !isOpen);
+    hamburger.classList.toggle('open', !isOpen);
+    hamburger.setAttribute('aria-expanded', String(!isOpen));
+    hamburger.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+  });
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+      closeMobileMenu();
+    }
+  });
+
+  // Copyright
+  document.getElementById('copyright').textContent = '© ' + new Date().getFullYear() + ' Nan Doud';
 </script>
+
+<p class="footer-copyright" id="copyright"></p>
 
 </body>
 </html>
