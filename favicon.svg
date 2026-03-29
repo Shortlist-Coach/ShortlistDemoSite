@@ -6,10 +6,15 @@
       <stop offset="80%"  stop-color="#f5e642"/>
       <stop offset="100%" stop-color="#00e5ff"/>
     </linearGradient>
+    <linearGradient id="tg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f5e642"/>
+      <stop offset="45%"  stop-color="#ff2d78"/>
+      <stop offset="100%" stop-color="#00e5ff"/>
+    </linearGradient>
   </defs>
   <path d="M 29,7 H 185 A 22,22 0 0,1 207,29 V 143 A 22,22 0 0,1 185,165 H 70 L 9,198 L 29,165 A 22,22 0 0,1 7,143 V 29 A 22,22 0 0,1 29,7 Z"
     fill="#0b0c1a" stroke="url(#fg)" stroke-width="5" stroke-linejoin="round"/>
   <text x="107" y="86" text-anchor="middle" dominant-baseline="central"
     font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"
-    font-size="128" font-weight="700" fill="#ffe600">SL</text>
+    font-size="128" font-weight="700" fill="url(#tg)">SL</text>
 </svg>
