@@ -6,6 +6,7 @@
   <meta name="description" content="Shortlist — A build log by Nan Doud. How I designed and built an AI-powered conversation-based job matching and progress tracking app from scratch." />
   <title>Shortlist — A Build Log | Nan Doud</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     :root {
       --bg: #0b0c1a;
@@ -264,13 +265,24 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* HERO GRAPHIC */
-    .hero-graphic { display: flex; align-items: center; justify-content: center; }
-    .sl-bubble-wrap { width: 100%; max-width: 260px; padding: 20px; }
-    .sl-bubble { width: 100%; height: auto; overflow: visible; display: block; }
-    .bubble-glow { animation: softPulse 3.5s ease-in-out infinite; }
+    .hero-graphic { display: flex; align-items: center; justify-content: center; overflow: visible; }
+    .sl-bubble-wrap { width: 100%; max-width: 260px; padding: 20px; overflow: visible; }
+    .sl-bubble { width: 100%; height: auto; overflow: visible; display: block; animation: softPulse 3.5s ease-in-out infinite; }
     @keyframes softPulse {
-      0%, 100% { filter: drop-shadow(0 0 3px rgba(180,240,255,0.32)); }
-      50%       { filter: drop-shadow(0 0 7px rgba(180,240,255,0.52)); }
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(180,240,255,0.18)); }
+      50%       { filter: drop-shadow(0 0 10px rgba(180,240,255,0.34)); }
+    }
+    .aura-band  { stroke-dasharray: 240 505; animation: travelBand 5s linear infinite; filter: blur(7px); opacity: 0.55; }
+    .aura-cyan  { animation-delay: 0s; }
+    .aura-pink  { animation-delay: -1.667s; }
+    .aura-yellow{ animation-delay: -3.333s; }
+    .liquid-band  { stroke-dasharray: 200 545; animation: travelBand 5s linear infinite; filter: blur(1.5px); }
+    .liquid-cyan  { animation-delay: 0s; }
+    .liquid-pink  { animation-delay: -1.667s; }
+    .liquid-yellow{ animation-delay: -3.333s; }
+    @keyframes travelBand {
+      from { stroke-dashoffset: 0; }
+      to   { stroke-dashoffset: -745; }
     }
     .sl-text { filter: drop-shadow(0 0 5px rgba(255,230,0,0.7)) drop-shadow(0 0 14px rgba(255,230,0,0.28)); }
 
@@ -300,6 +312,33 @@
   </style>
 </head>
 <body>
+
+<canvas id="sf" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;" aria-hidden="true"></canvas>
+<script>
+(function() {
+  var c = document.getElementById('sf'), ctx = c.getContext('2d');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var stars = Array.from({length: 160}, function() {
+    return { x: Math.random(), y: Math.random(), r: Math.random() * 0.9 + 0.25,
+             o: Math.random() * 0.4 + 0.12, sp: Math.random() * 3 + 2, ph: Math.random() * Math.PI * 2 };
+  });
+  function draw(t) {
+    if (!rm) requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, c.width, c.height);
+    stars.forEach(function(s) {
+      var a = rm ? s.o : s.o + Math.sin(t * 0.001 * (Math.PI * 2 / s.sp) + s.ph) * 0.08;
+      ctx.beginPath();
+      ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + Math.max(0.04, Math.min(0.65, a)) + ')';
+      ctx.fill();
+    });
+  }
+  if (rm) draw(0); else requestAnimationFrame(draw);
+})();
+</script>
 
 <div class="streaks" aria-hidden="true">
   <div class="streak"></div><div class="streak"></div><div class="streak"></div>
@@ -366,22 +405,20 @@
       <div class="sl-bubble-wrap">
         <svg class="sl-bubble" viewBox="0 0 215 208" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
           <defs>
-            <linearGradient id="neonBand" gradientUnits="userSpaceOnUse" x1="107" y1="0" x2="107" y2="215">
-              <stop offset="0%"   stop-color="#00e5ff"/>
-              <stop offset="33%"  stop-color="#ff2d78"/>
-              <stop offset="66%"  stop-color="#f5e642"/>
-              <stop offset="100%" stop-color="#00e5ff"/>
-              <animateTransform attributeName="gradientTransform" type="rotate"
-                from="0 107 86" to="360 107 86" dur="5s" repeatCount="indefinite"/>
-            </linearGradient>
+            <path id="bp" d="M 29,7 H 185 A 22,22 0 0,1 207,29 V 143 A 22,22 0 0,1 185,165 H 70 L 9,198 L 29,165 A 22,22 0 0,1 7,143 V 29 A 22,22 0 0,1 29,7 Z"/>
           </defs>
-          <!-- Fill -->
-          <path d="M 29,7 H 185 A 22,22 0 0,1 207,29 V 143 A 22,22 0 0,1 185,165 H 70 L 9,198 L 29,165 A 22,22 0 0,1 7,143 V 29 A 22,22 0 0,1 29,7 Z" fill="#0b0c1a"/>
-          <!-- Liquid neon band outline -->
-          <g class="bubble-glow">
-            <path d="M 29,7 H 185 A 22,22 0 0,1 207,29 V 143 A 22,22 0 0,1 185,165 H 70 L 9,198 L 29,165 A 22,22 0 0,1 7,143 V 29 A 22,22 0 0,1 29,7 Z"
-              fill="none" stroke="url(#neonBand)" stroke-width="3" stroke-linejoin="round"/>
-          </g>
+          <!-- Outer aura — thick + blurred, rendered behind fill so glow bleeds outward -->
+          <use href="#bp" class="aura-band aura-cyan"   fill="none" stroke="#00e5ff" stroke-width="14" stroke-linejoin="round"/>
+          <use href="#bp" class="aura-band aura-pink"   fill="none" stroke="#ff2d78" stroke-width="14" stroke-linejoin="round"/>
+          <use href="#bp" class="aura-band aura-yellow" fill="none" stroke="#f5e642" stroke-width="14" stroke-linejoin="round"/>
+          <!-- Dark fill covers interior, clipping inner half of aura -->
+          <use href="#bp" fill="#0b0c1a" stroke="none"/>
+          <!-- Liquid bands on top of fill — blur bleeds ~2px inside border -->
+          <use href="#bp" class="liquid-band liquid-cyan"   fill="none" stroke="#00e5ff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+          <use href="#bp" class="liquid-band liquid-pink"   fill="none" stroke="#ff2d78" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+          <use href="#bp" class="liquid-band liquid-yellow" fill="none" stroke="#f5e642" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+          <!-- Crisp white outline on top for definition -->
+          <use href="#bp" fill="none" stroke="rgba(232,234,246,0.7)" stroke-width="1.5" stroke-linejoin="round"/>
           <!-- SL -->
           <text class="sl-text"
             x="107" y="86"

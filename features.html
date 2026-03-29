@@ -6,6 +6,7 @@
   <meta name="description" content="Shortlist — Features. A conversation-based AI job matching and pipeline tracking app." />
   <title>Shortlist — Features | Nan Doud</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     :root {
       --bg: #0b0c1a;
@@ -234,6 +235,33 @@
   </style>
 </head>
 <body>
+
+<canvas id="sf" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;" aria-hidden="true"></canvas>
+<script>
+(function() {
+  var c = document.getElementById('sf'), ctx = c.getContext('2d');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function resize() { c.width = window.innerWidth; c.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var stars = Array.from({length: 160}, function() {
+    return { x: Math.random(), y: Math.random(), r: Math.random() * 0.9 + 0.25,
+             o: Math.random() * 0.4 + 0.12, sp: Math.random() * 3 + 2, ph: Math.random() * Math.PI * 2 };
+  });
+  function draw(t) {
+    if (!rm) requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, c.width, c.height);
+    stars.forEach(function(s) {
+      var a = rm ? s.o : s.o + Math.sin(t * 0.001 * (Math.PI * 2 / s.sp) + s.ph) * 0.08;
+      ctx.beginPath();
+      ctx.arc(s.x * c.width, s.y * c.height, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + Math.max(0.04, Math.min(0.65, a)) + ')';
+      ctx.fill();
+    });
+  }
+  if (rm) draw(0); else requestAnimationFrame(draw);
+})();
+</script>
 
 <div class="streaks" aria-hidden="true">
   <div class="streak"></div><div class="streak"></div><div class="streak"></div>
